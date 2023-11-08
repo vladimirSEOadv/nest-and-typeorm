@@ -10,10 +10,4 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-
-  // http://localhost:3001/api/profile
-  @Get('profile')
-  getProfile(): string {
-    return this.appService.getProfile();
-  }
 }
