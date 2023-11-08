@@ -1,2 +1,4 @@
 # Root git ignore file
 /notes.md
+.env
+/.idea/dbnavigator.xml
