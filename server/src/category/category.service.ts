@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -39,7 +43,7 @@ export class CategoryService {
       },
     });
     if (!category.length) {
-      throw new BadRequestException('This user dont have any category');
+      throw new NotFoundException('This user dont have any category');
     } else {
       return category;
     }
@@ -57,17 +61,46 @@ export class CategoryService {
       },
     });
     if (!category.length) {
-      throw new BadRequestException('This user dont have any category');
+      throw new NotFoundException('This user dont have any category');
     } else {
       return category;
     }
   }
 
-  async update(categoryId: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${categoryId} category`;
+  async update(
+    categoryId: number,
+    userId: number,
+    updateCategoryDto: UpdateCategoryDto,
+  ) {
+    const category = await this.categoryRepository.findOne({
+      where: {
+        id: categoryId,
+        user: { id: userId },
+      },
+    });
+    if (!category) {
+      throw new NotFoundException(
+        `Category ${categoryId} for this user not found`,
+      );
+    }
+    return await this.categoryRepository.update(categoryId, {
+      ...updateCategoryDto,
+      user: { id: +userId },
+    });
   }
 
-  async remove(categoryId: number) {
-    return `This action removes a #${categoryId} category`;
+  async remove(categoryId: number, userId: number) {
+    const category = await this.categoryRepository.findOne({
+      where: {
+        id: categoryId,
+        user: { id: userId },
+      },
+    });
+    if (!category) {
+      throw new NotFoundException(
+        `Category ${categoryId} for this user not found`,
+      );
+    }
+    return await this.categoryRepository.delete(categoryId);
   }
 }

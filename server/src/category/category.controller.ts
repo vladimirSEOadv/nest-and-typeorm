@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
+  Patch,
   Post,
   Request,
   UseGuards,
@@ -12,6 +14,7 @@ import {
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Controller('categories')
 export class CategoryController {
@@ -41,19 +44,23 @@ export class CategoryController {
     return this.categoryService.findOne(+id, +userId);
   }
 
-  //
-  // @Patch(':id')
-  // @UseGuards(JwtAuthGuard)
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateCategoryDto: UpdateCategoryDto,
-  // ) {
-  //   return this.categoryService.update(+id, updateCategoryDto);
-  // }
-  //
-  // @Delete(':id')
-  // @UseGuards(JwtAuthGuard)
-  // remove(@Param('id') id: string) {
-  //   return this.categoryService.remove(+id);
-  // }
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+    @Request() req,
+  ) {
+    const userId = req.user.id;
+    return this.categoryService.update(+id, userId, updateCategoryDto);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  remove(@Param('id') id: string, @Request() req) {
+    const userId = req.user.id;
+    return this.categoryService.remove(+id, +userId);
+  }
 }
