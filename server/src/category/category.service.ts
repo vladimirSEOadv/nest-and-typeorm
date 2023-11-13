@@ -12,48 +12,62 @@ export class CategoryService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  async create(createCategoryDto: CreateCategoryDto, id: number) {
-    const categoryExist = await this.categoryRepository.findBy({
-      user: { id },
+  async create(createCategoryDto: CreateCategoryDto, userId: number) {
+    const category = await this.categoryRepository.findBy({
+      user: { id: userId },
       title: createCategoryDto.title,
     });
-    if (categoryExist.length) {
+    if (category.length) {
       throw new BadRequestException('Category already exist');
     }
 
     const newCategory = {
       title: createCategoryDto.title,
-      user: { id },
+      user: { id: userId },
     };
 
     return await this.categoryRepository.save(newCategory);
   }
 
-  async findAll(id: number) {
-    const result = await this.categoryRepository.find({
+  async findAll(userId: number) {
+    const category = await this.categoryRepository.find({
       where: {
-        user: { id },
+        user: { id: userId },
       },
       relations: {
         transactions: true,
       },
     });
-    if (!result.length) {
+    if (!category.length) {
       throw new BadRequestException('This user dont have any category');
     } else {
-      return result;
+      return category;
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(categoryId: number, userId) {
+    const category = await this.categoryRepository.find({
+      where: {
+        user: { id: userId },
+        id: categoryId,
+      },
+      relations: {
+        user: true,
+        transactions: true,
+      },
+    });
+    if (!category.length) {
+      throw new BadRequestException('This user dont have any category');
+    } else {
+      return category;
+    }
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(categoryId: number, updateCategoryDto: UpdateCategoryDto) {
+    return `This action updates a #${categoryId} category`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(categoryId: number) {
+    return `This action removes a #${categoryId} category`;
   }
 }

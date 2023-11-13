@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Request,
   UseGuards,
@@ -20,24 +21,26 @@ export class CategoryController {
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
   create(@Body() createCategoryDto: CreateCategoryDto, @Request() req) {
-    const userId = Number(req.user.id);
-    return this.categoryService.create(createCategoryDto, userId);
+    const userId = req.user.id;
+    return this.categoryService.create(createCategoryDto, +userId);
   }
 
   @Get()
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
   findAll(@Request() req) {
-    const userId = Number(req.user.id);
-    return this.categoryService.findAll(userId);
+    const userId = req.user.id;
+    return this.categoryService.findAll(+userId);
   }
 
-  // @Get(':id')
-  // @UseGuards(JwtAuthGuard)
-  // @UsePipes(new ValidationPipe())
-  // findOne(@Param('id') id: string) {
-  //   return this.categoryService.findOne(+id);
-  // }
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  findOne(@Param('id') id: string, @Request() req) {
+    const userId = req.user.id;
+    return this.categoryService.findOne(+id, +userId);
+  }
+
   //
   // @Patch(':id')
   // @UseGuards(JwtAuthGuard)
