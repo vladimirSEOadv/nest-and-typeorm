@@ -29,8 +29,20 @@ export class CategoryService {
     return await this.categoryRepository.save(newCategory);
   }
 
-  findAll() {
-    return `This action returns all category`;
+  async findAll(id: number) {
+    const result = await this.categoryRepository.find({
+      where: {
+        user: { id },
+      },
+      relations: {
+        transactions: true,
+      },
+    });
+    if (!result.length) {
+      throw new BadRequestException('This user dont have any category');
+    } else {
+      return result;
+    }
   }
 
   findOne(id: number) {
