@@ -4,7 +4,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
@@ -12,7 +12,7 @@ import { Category } from '../../category/entities/category.entity';
 
 @Entity()
 export class Transaction {
-  @PrimaryColumn({ name: 'transaction_id' })
+  @PrimaryGeneratedColumn({ name: 'transaction_id' })
   id: number;
 
   @Column()
@@ -20,6 +20,9 @@ export class Transaction {
 
   @Column({ nullable: true })
   type: string;
+
+  @Column({ nullable: true })
+  amount: number;
 
   @ManyToOne(() => User, (user) => user.transactions)
   @JoinColumn({ name: 'user_id' })

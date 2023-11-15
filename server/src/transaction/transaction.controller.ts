@@ -6,40 +6,82 @@ import {
   Param,
   Patch,
   Post,
+  Query,
+  Request,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @Controller('transaction')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionService.create(createTransactionDto);
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  create(@Body() createTransactionDto: CreateTransactionDto, @Request() req) {
+    const userId = req.user.id;
+    return this.transactionService.create(createTransactionDto, +userId);
   }
 
   @Get()
-  findAll() {
-    return this.transactionService.findAll();
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  findAll(@Request() req) {
+    const userId = req.user.id;
+    return this.transactionService.findAll(+userId);
+  }
+
+  @Get('pagination')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  findAllWithPagination(
+    @Request() req,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 3,
+  ) {
+    const userId = req.user.id;
+    return this.transactionService.findAllWithPagination(
+      +userId,
+      +page,
+      +limit,
+    );
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionService.findOne(+id);
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  findOne(@Param('id') idTransaction: string, @Request() req) {
+    const userId = req.user.id;
+    return this.transactionService.findOne(+idTransaction, +userId);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
   update(
-    @Param('id') id: string,
+    @Param('id') idTransaction: string,
     @Body() updateTransactionDto: UpdateTransactionDto,
+    @Request() req,
   ) {
-    return this.transactionService.update(+id, updateTransactionDto);
+    const userId = req.user.id;
+    return this.transactionService.update(
+      +idTransaction,
+      +userId,
+      updateTransactionDto,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionService.remove(+id);
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  remove(@Param('id') idTransaction: string, @Request() req) {
+    const userId = req.user.id;
+    return this.transactionService.remove(+idTransaction, +userId);
   }
 }
