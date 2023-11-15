@@ -42,14 +42,14 @@ export class CategoryService {
         transactions: true,
       },
     });
-    if (!category.length) {
-      throw new NotFoundException('This user dont have any category');
-    } else {
+    if (category.length) {
       return category;
+    } else {
+      throw new NotFoundException('This user does not have any category');
     }
   }
 
-  async findOne(categoryId: number, userId) {
+  async findOne(categoryId: number, userId: number) {
     const category = await this.categoryRepository.find({
       where: {
         user: { id: userId },
@@ -60,10 +60,12 @@ export class CategoryService {
         transactions: true,
       },
     });
-    if (!category.length) {
-      throw new NotFoundException('This user dont have any category');
-    } else {
+    if (category.length) {
       return category;
+    } else {
+      throw new NotFoundException(
+        `This user dont have category №${categoryId}`,
+      );
     }
   }
 
@@ -78,15 +80,16 @@ export class CategoryService {
         user: { id: userId },
       },
     });
-    if (!category) {
+    if (category) {
+      return await this.categoryRepository.update(categoryId, {
+        ...updateCategoryDto,
+        user: { id: +userId },
+      });
+    } else {
       throw new NotFoundException(
         `Category ${categoryId} for this user not found`,
       );
     }
-    return await this.categoryRepository.update(categoryId, {
-      ...updateCategoryDto,
-      user: { id: +userId },
-    });
   }
 
   async remove(categoryId: number, userId: number) {
@@ -96,11 +99,12 @@ export class CategoryService {
         user: { id: userId },
       },
     });
-    if (!category) {
+    if (category) {
+      return await this.categoryRepository.delete(categoryId);
+    } else {
       throw new NotFoundException(
         `Category ${categoryId} for this user not found`,
       );
     }
-    return await this.categoryRepository.delete(categoryId);
   }
 }

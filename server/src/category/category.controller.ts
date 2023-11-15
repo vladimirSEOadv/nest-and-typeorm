@@ -39,28 +39,28 @@ export class CategoryController {
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
-  findOne(@Param('id') id: string, @Request() req) {
+  findOne(@Param('id') idCategory: string, @Request() req) {
     const userId = req.user.id;
-    return this.categoryService.findOne(+id, +userId);
+    return this.categoryService.findOne(+idCategory, +userId);
   }
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
   update(
-    @Param('id') id: string,
+    @Param('id') idCategory: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
     @Request() req,
   ) {
     const userId = req.user.id;
-    return this.categoryService.update(+id, userId, updateCategoryDto);
+    return this.categoryService.update(+idCategory, userId, updateCategoryDto);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   @UsePipes(new ValidationPipe())
-  remove(@Param('id') id: string, @Request() req) {
+  remove(@Param('id') idCategory: string, @Request() req) {
     const userId = req.user.id;
-    return this.categoryService.remove(+id, +userId);
+    return this.categoryService.remove(+idCategory, +userId);
   }
 }
