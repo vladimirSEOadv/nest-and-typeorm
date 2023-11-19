@@ -16,8 +16,11 @@ import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@Controller('transaction')
+@ApiTags('transactions')
+@ApiBearerAuth()
+@Controller('transactions')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
@@ -35,6 +38,17 @@ export class TransactionController {
   findAll(@Request() req) {
     const userId = req.user.id;
     return this.transactionService.findAll(+userId);
+  }
+
+  @Get(':type/find')
+  @UseGuards(JwtAuthGuard)
+  @UsePipes(new ValidationPipe())
+  findAllByType(
+    @Request() req,
+    @Param('type') transactionType: 'expense' | 'income',
+  ) {
+    const userId = req.user.id;
+    return this.transactionService.findAllByType(+userId, transactionType);
   }
 
   @Get('pagination')

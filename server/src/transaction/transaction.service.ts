@@ -133,4 +133,28 @@ export class TransactionService {
       );
     }
   }
+
+  async findAllByType(userId: number, transactionType: 'expense' | 'income') {
+    const transactionList = await this.transactionRepository.find({
+      where: {
+        user: { id: userId },
+        type: transactionType,
+      },
+      relations: {
+        user: true,
+        category: true,
+      },
+      order: {
+        createdAt: 'desc',
+      },
+    });
+    if (!transactionList.length) {
+      throw new NotFoundException(
+        `This user dont have ${transactionType} transactions`,
+      );
+    }
+    return transactionList.reduce((acc, currentTransaction) => {
+      return (acc += currentTransaction.amount);
+    }, 0);
+  }
 }
