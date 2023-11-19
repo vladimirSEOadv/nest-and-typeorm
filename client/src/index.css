@@ -1,39 +1,49 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');*/
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+    html {
+        font-family: "Roboto", system-ui, sans-serif;
+    }
+
+    body {
+        @apply text-sm;
+    }
+
+    td {
+        @apply capitalize text-white/70;
+    }
+
+    thead td {
+        @apply text-white;
+    }
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+@layer components {
+    .btn {
+        @apply flex gap-2 items-center text-white py-2 px-4 rounded-md;
+    }
+
+    .input {
+        @apply bg-transparent p-2 border bg-slate-700 placeholder:text-white border-slate-800 rounded-md outline-none focus:bg-slate-300;
+    }
+
+    .container {
+        @apply max-w-[1000px];
+    }
 }
 
-a:hover {
-  color: #535bf2;
-}
+@layer utilities {
+    .btn-red {
+        @apply bg-rose-900 hover:bg-rose-800;
+    }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+    .btn-green {
+        @apply bg-green-600 hover:bg-green-800;
+    }
 }
 
 
