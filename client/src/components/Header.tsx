@@ -1,10 +1,24 @@
-import { FC, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { FC } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaBtc, FaSignOutAlt } from 'react-icons/fa';
+import { useAuth } from '../hooks/useAuth.ts';
+import { useAppDispatch } from '../store/hooks.ts';
+import { logout } from '../store/user/userSlice.ts';
+import { LocalStorageTokenManager } from '../helpers/localStorage.helper.ts';
+import { toast } from 'react-toastify';
 
 export const Header: FC = () => {
-	// const isAuth = true;
-	const [isAuth, setIsAuth] = useState(true);
+	const isAuth = useAuth();
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+
+	const logoutHandler = () => {
+		LocalStorageTokenManager.removeToken();
+		dispatch(logout());
+		toast.success('You logged out');
+		navigate('/');
+	};
+
 	return (
 		<header className="flex items-center  bg-slate-800 p-4 shadow-sm backdrop-blur-sm ">
 			<Link to={'/'}>
@@ -44,25 +58,12 @@ export const Header: FC = () => {
 								Categories
 							</NavLink>
 						</li>
-						{/*<li>*/}
-						{/*	<NavLink*/}
-						{/*		to={'/auth'}*/}
-						{/*		className={({ isActive }) =>*/}
-						{/*			isActive ? 'text-white' : 'text-white/50'*/}
-						{/*		}*/}
-						{/*	>*/}
-						{/*		Auth*/}
-						{/*	</NavLink>*/}
-						{/*</li>*/}
 					</ul>
 				</nav>
 			)}
 			{/*Actions*/}
 			{isAuth ? (
-				<button
-					// onClick={() => setIsAuth((prev) => !prev)}
-					className="btn btn-red "
-				>
+				<button onClick={logoutHandler} className="btn btn-red ">
 					<span>Log out</span>
 					<FaSignOutAlt />
 				</button>

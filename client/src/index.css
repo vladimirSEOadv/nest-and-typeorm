@@ -28,7 +28,7 @@
     }
 
     .input {
-        @apply bg-transparent p-2 border bg-slate-700 placeholder:text-white border-slate-800 rounded-md outline-none focus:bg-slate-300;
+        @apply bg-transparent p-2 border bg-slate-700 placeholder:text-white placeholder:text-sm border-slate-800 rounded-md outline-none focus:bg-slate-300;
     }
 
     .container {
