@@ -69,7 +69,9 @@ export const Auth: FC = () => {
 					onChange={(e) => setPassword(e.target.value)}
 					value={password}
 				/>
-				<button className="btn btn-green mx-auto">Submit</button>
+				<button className="btn btn-green mx-auto">
+					{isLogin ? 'Submit' : 'Login'}
+				</button>
 			</form>
 			<div className="mt-5 flex justify-center">
 				{isLogin ? (
