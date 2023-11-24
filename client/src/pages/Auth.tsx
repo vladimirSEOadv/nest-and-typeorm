@@ -6,10 +6,13 @@ import { useAppDispatch } from '../store/hooks.ts';
 import { login } from '../store/user/userSlice.ts';
 import { useNavigate } from 'react-router-dom';
 
+const userMail = import.meta.env.VITE_USER_MAIL || '';
+const userPassword = import.meta.env.VITE_USER_PASSWORD || '';
+
 export const Auth: FC = () => {
 	const [isLogin, setIsLogin] = useState<boolean>(false);
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [email, setEmail] = useState(userMail);
+	const [password, setPassword] = useState(userPassword);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
