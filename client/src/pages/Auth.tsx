@@ -70,7 +70,7 @@ export const Auth: FC = () => {
 					value={password}
 				/>
 				<button className="btn btn-green mx-auto">
-					{isLogin ? 'Submit' : 'Login'}
+					{isLogin ? 'Login' : 'Submit'}
 				</button>
 			</form>
 			<div className="mt-5 flex justify-center">
