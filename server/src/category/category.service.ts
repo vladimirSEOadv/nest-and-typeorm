@@ -42,11 +42,7 @@ export class CategoryService {
         transactions: true,
       },
     });
-    if (category.length) {
-      return category;
-    } else {
-      throw new NotFoundException('This user does not have any category');
-    }
+    return category;
   }
 
   async findOne(categoryId: number, userId: number) {
@@ -56,7 +52,6 @@ export class CategoryService {
         id: categoryId,
       },
       relations: {
-        user: true,
         transactions: true,
       },
     });

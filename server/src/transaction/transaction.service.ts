@@ -37,18 +37,13 @@ export class TransactionService {
         user: { id: userId },
       },
       relations: {
-        user: true,
         category: true,
       },
       order: {
         createdAt: 'desc',
       },
     });
-    if (transactionList.length) {
-      return transactionList;
-    } else {
-      throw new NotFoundException('This user does not have any transactions.');
-    }
+    return transactionList;
   }
 
   async findOne(transactionId: number, userId: number) {
