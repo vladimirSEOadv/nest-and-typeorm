@@ -29,7 +29,7 @@ export class Transaction {
   user: User;
 
   @ManyToOne(() => Category, (category) => category.transactions, {
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'category_id' })
   category: Category;
