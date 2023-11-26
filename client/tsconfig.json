@@ -18,9 +18,9 @@
     "jsx": "react-jsx",
     /* Linting */
     "strict": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     // TODO turn on checks for unused variables
-    "noUnusedParameters": false,
+    "noUnusedParameters": true,
     // TODO turn on checks for unused variables
     "noFallthroughCasesInSwitch": true
   },

@@ -1,32 +1,29 @@
 import { instance } from '../../../api/axios.api.ts';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
-// TODO Fix types
+// TODO FIX TYPES
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export const categoriesAction = async ({ request }) => {
+export const transactionsAction = async ({ request }) => {
 	try {
 		if (request.method === 'POST') {
 			const formData = await request.formData();
-			const title = {
+			const newTransaction = {
 				title: formData.get('title'),
+				amount: Number(formData.get('amount')),
+				category: formData.get('category'),
+				type: formData.get('type'),
 			};
-			await instance.post('/categories', title);
-			return null;
-		}
-		if (request.method === 'PATCH') {
-			const formData = await request.formData();
-			const category = {
-				id: formData.get('id'),
-				title: formData.get('title'),
-			};
-			await instance.patch(`/categories/${category.id}`, category);
+			await instance.post('/transactions', newTransaction);
+			toast.success('New transaction created');
 			return null;
 		}
 		if (request.method === 'DELETE') {
 			const formData = await request.formData();
-			const categoryId = formData.get('id');
-			await instance.delete(`/categories/${categoryId}`);
+			const id = formData.get('id');
+			await instance.delete(`/transactions/${id}`);
+			toast.success('Transaction deleted');
 			return null;
 		}
 	} catch (err) {

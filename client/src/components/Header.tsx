@@ -18,7 +18,6 @@ export const Header: FC = () => {
 		toast.success('You logged out');
 		navigate('/');
 	};
-
 	return (
 		<header className="flex items-center  bg-slate-800 p-4 shadow-sm backdrop-blur-sm ">
 			<Link to={'/'}>

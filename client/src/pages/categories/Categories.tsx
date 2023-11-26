@@ -19,7 +19,7 @@ export const Categories: FC = () => {
 				formTitle={'Enter category title'}
 				placeholderText={'Title...'}
 				type={'post'}
-				initTitle={''}
+				initText={''}
 				setVisibleModal={setVisibleModal}
 			/>
 		),
@@ -30,7 +30,7 @@ export const Categories: FC = () => {
 				placeholderText={'Title...'}
 				type={'patch'}
 				id={idForPatchCategory}
-				initTitle={currentCategory?.title || ''}
+				initText={currentCategory?.title || ''}
 				setVisibleModal={setVisibleModal}
 			/>
 		),
