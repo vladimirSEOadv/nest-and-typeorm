@@ -1,7 +1,7 @@
 import { IResponseUserData, IUser, IUserData } from '../types/types.ts';
 import { instance } from '../api/axios.api.ts';
 
-export const AuthServise = {
+export const AuthService = {
 	async registration(
 		userData: IUserData,
 	): Promise<IResponseUserData | undefined> {

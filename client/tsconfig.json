@@ -19,9 +19,7 @@
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
-    // TODO turn on checks for unused variables
     "noUnusedParameters": true,
-    // TODO turn on checks for unused variables
     "noFallthroughCasesInSwitch": true
   },
   "include": [

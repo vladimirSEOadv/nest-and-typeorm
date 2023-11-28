@@ -48,7 +48,6 @@ export const TransactionTable: FC<ITransactionTable> = ({ limit }) => {
 		setCurrentPage(selectedItem.selected + 1);
 	};
 
-	// console.log('transactions', transactions);
 	return (
 		<>
 			<ReactPaginate

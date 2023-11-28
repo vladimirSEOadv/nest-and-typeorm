@@ -2,13 +2,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { IUser } from '../../types/types.ts';
 
-// Define a type for the slice state
 interface UserState {
 	user: IUser | null;
 	isAuth: boolean;
 }
 
-// Define the initial state using that type
 const initialState: UserState = {
 	user: null,
 	isAuth: false,

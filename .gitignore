@@ -1,5 +1,7 @@
 # Root git ignore file
+.idea
 /notes.md
 .env
 /.idea/dbnavigator.xml
 /.idea/jsLibraryMappings.xml
+/node_modules/

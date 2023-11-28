@@ -1,3 +1,3 @@
 export const Home = () => {
-  return <div>Home</div>;
+	return <h1 className="mt-4 flex items-center justify-center">Home page</h1>;
 };

@@ -1,7 +1,7 @@
 import { useAppDispatch } from '../store/hooks.ts';
 import { useCallback, useEffect } from 'react';
 import { LocalStorageTokenManager } from '../helpers/localStorage.helper.ts';
-import { AuthServise } from '../services/auth.servise.ts';
+import { AuthService } from '../services/authService.ts';
 import { login, logout } from '../store/user/userSlice.ts';
 
 export const useCheckAuth = () => {
@@ -10,7 +10,7 @@ export const useCheckAuth = () => {
 		const token = LocalStorageTokenManager.getToken();
 		try {
 			if (token) {
-				const data = await AuthServise.getProfile();
+				const data = await AuthService.getProfile();
 				if (data) {
 					dispatch(login(data));
 				} else {

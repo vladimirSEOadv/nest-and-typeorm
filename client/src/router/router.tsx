@@ -4,7 +4,7 @@ import { ErrorPage } from '../pages/ErrorPage.tsx';
 import { Home } from '../pages/Home.tsx';
 import { Transactions } from '../pages/transactions/Transactions.tsx';
 import { Categories } from '../pages/categories/Categories.tsx';
-import { Auth } from '../pages/Auth.tsx';
+import { Auth } from '../pages/auth/Auth.tsx';
 import { ProtectedRoute } from '../components/ProtectedRoute.tsx';
 import { categoriesAction } from '../pages/categories/utils/categoryAction.ts';
 import { categoryLoader } from '../pages/categories/utils/categoryLoader.ts';
