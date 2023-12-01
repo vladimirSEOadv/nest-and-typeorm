@@ -1,8 +1,10 @@
-#### [React](https://reactjs.org/)
-
-***
-
-#### [Nest](https://nestjs.com/)
+![javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=000000)
+![vite](https://img.shields.io/badge/vite-9b5ffe?style=for-the-badge&logo=vite&logoColor=ffca22)
+![react](https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=React&logoColor=000000)
+![redux](https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=Redux&logoColor=FFFFFF)
+![tailwindcss](https://img.shields.io/badge/tailwindcss-FFFFFF?style=for-the-badge&logo=tailwindcss&logoColor=38bdf8)
+![nest](https://img.shields.io/badge/nest-000000?style=for-the-badge&logo=nestjs&logoColor=ea2845)
+![postgreSQL](https://img.shields.io/badge/postgreSQL-32668f?style=for-the-badge&logo=postgreSQL&logoColor=000000)
 
 ***
 
